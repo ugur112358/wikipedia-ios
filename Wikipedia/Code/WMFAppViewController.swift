@@ -1116,10 +1116,9 @@ final class WMFAppViewController: UITabBarController, AppTabBarDelegate {
             dismissPresentedViewControllers()
             selectedIndex = WMFAppTabType.places.rawValue
             currentTabNavigationController?.popToRootViewController(animated: animated)
-            if let articleURL = activity.wmf_linkURL() {
-                placesViewController.updateViewModeToMap()
-                placesViewController.showArticleURL(articleURL)
-            }
+            let handler = PlacesDeepLinkHandler()
+            let destination = handler.destination(from: activity)
+            placesViewController.navigate(to: destination)
 
         case .random:
             dismissPresentedViewControllers()

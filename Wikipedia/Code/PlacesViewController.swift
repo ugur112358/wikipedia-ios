@@ -2634,3 +2634,21 @@ extension PlacesViewController: YearInReviewBadgeDelegate {
         updateProfileButton()
     }
 }
+
+// MARK: - Deep Link Navigation
+
+extension PlacesViewController: PlacesDeepLinkNavigating {
+    func navigate(to destination: PlacesDeepLinkDestination) {
+        switch destination {
+        case .coordinates(let latitude, let longitude):
+            guard view != nil else { return } 
+            updateViewModeToMap()
+            let location = CLLocation(latitude: latitude, longitude: longitude)
+            zoomAndPanMapView(toLocation: location)
+        case .article(let url):
+            showArticleURL(url)
+        case .default:
+            break
+        }
+    }
+}
